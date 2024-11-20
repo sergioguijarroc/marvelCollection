@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   get "bienvenida", to: "home#index"
   get "characters/new", to: "characters#new"
   post "characters", to:"characters#create"
+  get "characters/:id", to:"characters#show"
 end
