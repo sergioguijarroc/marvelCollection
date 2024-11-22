@@ -1,0 +1,21 @@
+<h1>Characters List</h1>
+
+
+<%= link_to 'Create new character', create_character_path, class: "btn btn-primary my-3" %>
+<div
+    class="table-responsive col-4"
+>
+    <table
+        class="table table-primary"
+    >
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <%= render @characters%>
+    </table>
+</div>
+

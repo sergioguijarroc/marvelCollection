@@ -1,0 +1,11 @@
+  <tbody>
+            <tr class="">
+                <td scope="row"><%=character.id%></td>
+                <td scope="row"><%=character.name%></td>
+                <td>
+                    <%= link_to 'Detail', character, class:"btn btn-success"%>
+                    <%= link_to 'Update', edit_character_path(character), class: "btn btn-warning" %>
+                    <%= link_to 'Delete', character, method: :delete, class: "btn btn-danger" %>
+               </td>
+            </tr>
+        </tbody>

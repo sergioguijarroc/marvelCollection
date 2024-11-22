@@ -1,4 +1,12 @@
-<h1><%=@character.name%></h1>
+
+<h2><%=@character.name%></h2>
 <div>
     <%=@character.description%>
+</div>
+<div>
+    Email de la persona que lo ha creado: <b><%=@character.user.email%></b>
+</div>
+
+<div>
+    <%= link_to 'Eliminar el personaje', @character, method: :delete ,class: "btn btn-danger"%>
 </div>

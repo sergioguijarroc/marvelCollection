@@ -1,0 +1,13 @@
+  <nav class="navbar bg-black navbar-dark navbar-expand-lg">
+    <div class="container-fluid">
+      <%= link_to 'Home', root_path, class: 'navbar-brand' %>
+      <%= link_to 'Characters List', characters_path, class: 'btn btn-outline-light' %>
+      <%= link_to 'New Character', create_character_path, class: 'btn btn-outline-light' %>
+      <% if user_signed_in?%>
+        <%= link_to 'Logout', destroy_user_session_path, method: :delete, class:"btn btn-outline-light"%>
+      <% else %>
+        <%= link_to 'SignUp', new_user_registration_path, class:"btn btn-outline-light" %>
+        <%= link_to 'Login', new_user_session_path, class:"btn btn-outline-light"%>
+      <%end%>
+    </div>
+  </nav>

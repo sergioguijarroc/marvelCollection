@@ -10,7 +10,17 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="bg-body-tertiary">
+    <%= render "partials/nav"%>
+
+    <% if notice%>
+      <p class="alert alert-primary"><%= notice%></p>
+    <%end%>
+    <%if alert%>
+      <p class="alert alert-danger"><%= alert%></p>
+    <%end%>
+  <div class="container mt-5">
+     <%= yield %>
+  </div>
   </body>
 </html>
