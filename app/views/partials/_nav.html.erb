@@ -1,7 +1,10 @@
   <nav class="navbar bg-black navbar-dark navbar-expand-lg">
     <div class="container-fluid">
       <%= link_to 'Home', root_path, class: 'navbar-brand' %>
-      <%= link_to 'Characters List', characters_path, class: 'btn btn-outline-light' %>
+      <%= link_to 'All Characters', characters_path, class: 'btn btn-outline-light' %>
+      <%if user_signed_in?%>
+      <%= link_to 'My Characters', characters_by_user_path(current_user), class: 'btn btn-outline-light' %>
+      <%end%>
       <%= link_to 'New Character', create_character_path, class: 'btn btn-outline-light' %>
       <% if user_signed_in?%>
         <%= link_to 'Logout', destroy_user_session_path, method: :delete, class:"btn btn-outline-light"%>

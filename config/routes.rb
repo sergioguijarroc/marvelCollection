@@ -11,5 +11,5 @@ Rails.application.routes.draw do
   patch 'characters/:id', to: 'characters#update'
   delete 'characters/:id', to: 'characters#destroy', as: :character
   get 'characters', to: 'characters#index'
-  get 'characters/user/:id', to: 'characters#from_user'
+  get 'characters/user/:user_id', to: 'characters#from_user', as: :characters_by_user
 end

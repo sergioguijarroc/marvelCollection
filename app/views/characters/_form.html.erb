@@ -1,20 +1,62 @@
-<div class="">
-    <%= form_with(model: @character, local: true) do |form| %>
-    <div class="row">
-        <div class="col-2">
-            <%= form.label :name%>
-            <%= form.text_field :name, class: "form-control"%>
+<!-- _form.html.erb -->
+<div class="card shadow-sm">
+  <div class="card-body">
+    <%= form_with(model: @character, local: true, class: "needs-validation") do |form| %>
+      <% if @character.errors.any? %>
+        <div class="alert alert-danger">
+          <h5 class="alert-heading">
+            <i class="bi bi-exclamation-triangle"></i> 
+            <%= pluralize(@character.errors.count, "error") %> prohibited this character from being saved:
+          </h5>
+          <ul class="mb-0">
+            <% @character.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-10">
-            <%=form.label :description %>
-            <%=form.rich_text_area :description, class: "form-control" %>
-        </div>
-        <div>
-            <%= form.submit class: "btn btn-primary mt-3"%>
-        </div>
-    </div>
-<% end %>
-</div>
+      <% end %>
 
+      <div class="row g-3 mb-4">
+        <div class="col-md-6">
+          <div class="form-floating">
+            <%= form.text_field :name, class: "form-control", placeholder: "Character name" %>
+            <%= form.label :name, class: "required" do %>
+              <i class="bi bi-person"></i> Name
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="form-group">
+            <%= form.label :description, class: "form-label required" do %>
+              <i class="bi bi-file-text"></i> Description
+            <% end %>
+            <%= form.rich_text_area :description,
+                class: "form-control",
+                placeholder: "Write your character description here..." %>
+          </div>
+        </div>
+      </div>
+      <%if @users%>
+      <div class="row g-3 mb-4">
+        <div class="col-md-6">
+          <div class="form-floating">
+            <%= form.collection_select :user_id, @users, :id, :email,  prompt: "Select a user" , class: "form-control" %>
+          </div>
+        </div>
+      </div>
+      <%end%>
+      <div class="d-flex justify-content-end gap-2">
+        <%= link_to characters_path, class: "btn btn-outline-secondary" do %>
+          <i class="bi bi-x-circle"></i> Cancel
+        <% end %>
+        
+        <%= form.submit class: "btn btn-primary" do %>
+          <i class="bi bi-check-circle"></i> Save Character
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

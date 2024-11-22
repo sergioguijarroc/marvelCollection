@@ -1,11 +1,23 @@
-  <tbody>
-            <tr class="">
-                <td scope="row"><%=character.id%></td>
-                <td scope="row"><%=character.name%></td>
-                <td>
-                    <%= link_to 'Detail', character, class:"btn btn-success"%>
-                    <%= link_to 'Update', edit_character_path(character), class: "btn btn-warning" %>
-                    <%= link_to 'Delete', character, method: :delete, class: "btn btn-danger" %>
-               </td>
-            </tr>
-        </tbody>
+<!-- _character.html.erb -->
+<tr>
+  <td class="text-center"><%= character.id %></td>
+  <td><%= character.name %></td>
+  <td>
+    <div class="d-flex justify-content-center gap-2">
+      <%= link_to character, class: "btn btn-sm btn-outline-primary" do %>
+        <i class="bi bi-eye-fill"></i> View
+      <% end %>
+      
+      <%= link_to edit_character_path(character), class: "btn btn-sm btn-outline-warning" do %>
+        <i class="bi bi-pencil-fill"></i> Edit
+      <% end %>
+      
+      <%= link_to character, 
+          method: :delete, 
+          class: "btn btn-sm btn-outline-danger",
+          data: { confirm: 'Are you sure?' } do %>
+        <i class="bi bi-trash-fill"></i> Delete
+      <% end %>
+    </div>
+  </td>
+</tr>
