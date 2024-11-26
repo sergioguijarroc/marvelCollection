@@ -1,19 +1,40 @@
-<p id="notice"><%= notice %></p>
+<!-- show.html.erb -->
+<div class="container-fluid py-4">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="card-title mb-0"><%= @comic.title %></h2>
+        <%= link_to comics_path, class: "btn btn-outline-secondary mt-2" do %>
+          <i class="bi bi-arrow-left"></i> Back
+        <% end %>
+      </div>
 
-<p>
-  <strong>Title:</strong>
-  <%= @comic.title %>
-</p>
+      <div class="card mb-4">
+        <div class="card-body bg-light">
+          <h5 class="card-subtitle mb-2 text-muted">Release Date</h5>
+          <p class="card-text"><%= @comic.release_date %></p>
+        </div>
+      </div>
 
-<p>
-  <strong>Release date:</strong>
-  <%= @comic.release_date %>
-</p>
+      <div class="card mb-4">
+        <div class="card-body bg-light">
+          <h5 class="card-subtitle mb-2 text-muted">Description</h5>
+          <p class="card-text"><%= @comic.description %></p>
+        </div>
+      </div>
 
-<p>
-  <strong>Description:</strong>
-  <%= @comic.description %>
-</p>
-
-<%= link_to 'Edit', edit_comic_path(@comic) %> |
-<%= link_to 'Back', comics_path %>
+      <div class="d-flex justify-content-end">
+        <%= link_to edit_comic_path(@comic), class: "btn btn-warning me-2" do %>
+          <i class="bi bi-pencil-fill"></i> Edit
+        <% end %>
+        
+        <%= link_to @comic, 
+            method: :delete, 
+            class: "btn btn-danger",
+            data: { confirm: 'Are you sure you want to delete this comic?' } do %>
+          <i class="bi bi-trash-fill"></i> Delete
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

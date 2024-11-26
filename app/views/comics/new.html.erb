@@ -2,4 +2,6 @@
 
 <%= render 'form', comic: @comic %>
 
-<%= link_to 'Back', comics_path %>
+        <%= link_to comics_path, class: "btn btn-outline-secondary mt-2" do %>
+          <i class="bi bi-arrow-left"></i> Back
+        <% end %>

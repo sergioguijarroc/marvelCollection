@@ -1,5 +1,5 @@
 class ComicsController < ApplicationController
-  before_action :set_comic, only: %i[ show edit update destroy ]
+  before_action :set_comic, only: %i[show edit update destroy]
 
   # GET /comics or /comics.json
   def index
@@ -7,8 +7,7 @@ class ComicsController < ApplicationController
   end
 
   # GET /comics/1 or /comics/1.json
-  def show
-  end
+  def show; end
 
   # GET /comics/new
   def new
@@ -25,7 +24,7 @@ class ComicsController < ApplicationController
 
     respond_to do |format|
       if @comic.save
-        format.html { redirect_to @comic, notice: "Comic was successfully created." }
+        format.html { redirect_to @comic, notice: 'Comic was successfully created.' }
         format.json { render :show, status: :created, location: @comic }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +37,7 @@ class ComicsController < ApplicationController
   def update
     respond_to do |format|
       if @comic.update(comic_params)
-        format.html { redirect_to @comic, notice: "Comic was successfully updated." }
+        format.html { redirect_to @comic, notice: 'Comic was successfully updated.' }
         format.json { render :show, status: :ok, location: @comic }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +51,20 @@ class ComicsController < ApplicationController
     @comic.destroy
 
     respond_to do |format|
-      format.html { redirect_to comics_path, status: :see_other, notice: "Comic was successfully destroyed." }
+      format.html { redirect_to comics_path, status: :see_other, notice: 'Comic was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_comic
-      @comic = Comic.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def comic_params
-      params.require(:comic).permit(:title, :release_date, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_comic
+    @comic = Comic.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def comic_params
+    params.require(:comic).permit(:title, :release_date, :description)
+  end
 end
