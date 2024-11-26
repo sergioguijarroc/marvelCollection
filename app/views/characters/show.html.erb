@@ -1,4 +1,4 @@
-<!-- show.html.erb -->
+<!-- app/views/characters/show.html.erb -->
 <div class="container-fluid py-4">
   <div class="card shadow-sm">
     <div class="card-body">
@@ -8,6 +8,14 @@
           <i class="bi bi-arrow-left"></i> Back
         <% end %>
       </div>
+
+      <% if @character.image_url.present? %>
+        <div class="row mb-4">
+          <div class="col-12 text-center">
+            <img src="<%= @character.image_url %>" alt="<%= @character.name %>" class="img-fluid rounded w-25" />
+          </div>
+        </div>
+      <% end %>
 
       <div class="card mb-4">
         <div class="card-body bg-light">

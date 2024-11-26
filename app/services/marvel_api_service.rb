@@ -1,9 +1,10 @@
 require 'digest/md5'
+require 'httparty'
 
 class MarvelApiService
   BASE_URL = 'https://gateway.marvel.com/v1/public'
-  PUBLIC_KEY = 'your_public_key'
-  PRIVATE_KEY = 'your_private_key'
+  PUBLIC_KEY = 'd0db61fb1cbeb690d6dc7197e102e3b5'
+  PRIVATE_KEY = '77a759fecfa94e9d4b5c37cf1b5e42ad1f86f4fe'
 
   def initialize(character_name)
     @character_name = character_name

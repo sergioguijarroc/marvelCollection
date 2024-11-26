@@ -18,16 +18,20 @@ class CharactersController < ApplicationController
   def create
     character_attributes = permit_params
     character_attributes[:user_id] = current_user.id if character_attributes[:user_id].blank?
+
+    # Fetch Marvel data before creating character
+    marvel_data = MarvelApiService.new(character_attributes[:name]).fetch_character_data
+    character_attributes.merge!(marvel_data) if marvel_data
+
     @character = Character.new(character_attributes)
+
     if @character.save
       @character.save_comics
       redirect_to @character
-      # Esto va a la acción show
     else
       @comics = Comic.all
       @users = User.all
       render :new, status: :unprocessable_entity
-      # Esto vuelve a renderizar la vista de new, sin pasar por la acción
     end
   end
 
@@ -82,6 +86,7 @@ class CharactersController < ApplicationController
 
   # Permit params
   def permit_params
-    params.require(:character).permit(:name, :description, :user_id, comic_elements: [])
+    params.require(:character).permit(:name, :description, :user_id, :image_url, :marvel_description,
+                                      comic_elements: [])
   end
 end
