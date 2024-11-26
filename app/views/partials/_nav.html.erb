@@ -5,7 +5,7 @@
       <%if user_signed_in?%>
       <%= link_to 'My Characters', characters_by_user_path(current_user), class: 'btn btn-outline-light' %>
       <%end%>
-      <%= link_to 'New Character', create_character_path, class: 'btn btn-outline-light' %>
+      <%= link_to 'New Character', new_character_path, class: 'btn btn-outline-light' %>
       <% if user_signed_in?%>
         <%= link_to 'Logout', destroy_user_session_path, method: :delete, class:"btn btn-outline-light"%>
       <% else %>

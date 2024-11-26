@@ -4,12 +4,17 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
 
-  get 'characters/new', to: 'characters#new', as: :create_character
-  post 'characters', to: 'characters#create'
-  get 'characters/:id', to: 'characters#show'
-  get 'characters/:id/edit', to: 'characters#edit', as: :edit_character
-  patch 'characters/:id', to: 'characters#update'
-  delete 'characters/:id', to: 'characters#destroy', as: :character
-  get 'characters', to: 'characters#index'
   get 'characters/user/:user_id', to: 'characters#from_user', as: :characters_by_user
+  resources :comics
+  resources :characters do
+    get 'user/user_id', to: 'characters#from_user', on: :collection, as: :characters_by_user
+  end
+
+  # get 'characters/new', to: 'characters#new',
+  # post 'characters', to: 'characters#create'
+  # get 'characters/:id', to: 'characters#show'
+  # get 'characters/:id/edit', to: 'characters#edit',
+  # patch 'characters/:id', to: 'characters#update'
+  # delete 'characters/:id', to: 'characters#destroy',
+  # get 'characters', to: 'characters#index'
 end

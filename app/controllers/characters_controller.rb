@@ -37,10 +37,13 @@ class CharactersController < ApplicationController
   end
 
   def update
-    @character.update(name: params[:character][:name],
-                      description: params[:character][:description],
-                      user_id: params[:character][:user_id] || current_user.id)
-    redirect_to @character # Redirige a la vista show
+    @character = Character.find(params[:id])
+    if @character.update(permit_params) # si se actualiza correctamente con los datos del formulario
+      redirect_to @character # Redirige a la vista show
+    else
+      @users = User.all
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
