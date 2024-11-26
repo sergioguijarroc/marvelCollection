@@ -58,6 +58,22 @@
         </div>
       <% end %>
 
+      <% if @comics %>
+        <%= form.label :comic_elements, class: "form-label" do %>
+          <i class="bi bi-book"></i> Select a comic
+        <% end %>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mb-4">
+          <% @comics.each do |comic| %>
+            <div class="col">
+              <div class="form-check">
+                <%= form.check_box :comic_elements, { multiple: true, class: "form-check-input" }, comic.id, nil %>
+                <%= form.label :comic_elements, comic.title, value: comic.id, class: "form-check-label" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
       <div class="d-flex justify-content-end gap-2">
         <%= link_to characters_path, class: "btn btn-outline-secondary" do %>
           <i class="bi bi-x-circle"></i> Cancel

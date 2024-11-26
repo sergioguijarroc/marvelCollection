@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_11_26_121357) do
+ActiveRecord::Schema.define(version: 2024_11_26_173025) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -50,12 +50,23 @@ ActiveRecord::Schema.define(version: 2024_11_26_121357) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "appearances", force: :cascade do |t|
+    t.integer "character_id", null: false
+    t.integer "comic_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["character_id"], name: "index_appearances_on_character_id"
+    t.index ["comic_id"], name: "index_appearances_on_comic_id"
+  end
+
   create_table "characters", force: :cascade do |t|
     t.string "name"
     t.integer "status"
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "image_url"
+    t.text "marvel_description"
     t.index ["user_id"], name: "index_characters_on_user_id"
   end
 
@@ -81,5 +92,7 @@ ActiveRecord::Schema.define(version: 2024_11_26_121357) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "appearances", "characters"
+  add_foreign_key "appearances", "comics"
   add_foreign_key "characters", "users"
 end

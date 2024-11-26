@@ -6,6 +6,7 @@ class CharactersController < ApplicationController
   # Esto es para obligar que el usuario esté logueado para acceder a estas vistas
 
   def new
+    @comics = Comic.all
     @character = Character.new
     return if params[:user_id]
 
@@ -18,11 +19,12 @@ class CharactersController < ApplicationController
     character_attributes = permit_params
     character_attributes[:user_id] = current_user.id if character_attributes[:user_id].blank?
     @character = Character.new(character_attributes)
-
     if @character.save
+      @character.save_comics
       redirect_to @character
       # Esto va a la acción show
     else
+      @comics = Comic.all
       @users = User.all
       render :new, status: :unprocessable_entity
       # Esto vuelve a renderizar la vista de new, sin pasar por la acción
@@ -30,18 +32,23 @@ class CharactersController < ApplicationController
   end
 
   # Muestra un Character específico basado en su id
-  def show; end
+  def show
+    @comics = @character.comics
+  end
 
   def edit
     @users = User.all
+    @comics = Comic.all
   end
 
   def update
     @character = Character.find(params[:id])
     if @character.update(permit_params) # si se actualiza correctamente con los datos del formulario
+      @character.save_comics
       redirect_to @character # Redirige a la vista show
     else
       @users = User.all
+      @comics = Comic.all
       render :edit, status: :unprocessable_entity
     end
   end
@@ -75,6 +82,6 @@ class CharactersController < ApplicationController
 
   # Permit params
   def permit_params
-    params.require(:character).permit(:name, :description, :user_id)
+    params.require(:character).permit(:name, :description, :user_id, comic_elements: [])
   end
 end
