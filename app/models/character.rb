@@ -5,6 +5,8 @@ class Character < ApplicationRecord
   has_many :comics, through: :appearances
   attr_accessor :comic_elements
 
+  after_save :save_comics
+
   def save_comics
     return appearances.destroy_all if comic_elements.nil? || comic_elements.empty?
 

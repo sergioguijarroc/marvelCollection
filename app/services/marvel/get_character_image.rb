@@ -1,5 +1,5 @@
 module Marvel
-  class CharacterService < BaseService # Cambiar nombre
+  class GetCharacterImage < BaseService # Cambiar nombre
     def initialize(character_name)
       super()
       @character_name = character_name

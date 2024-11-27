@@ -4,7 +4,6 @@ class CharactersController < ApplicationController
   before_action :find_character, except: %i[new create index from_user]
   before_action :load_characters, only: %i[index from_user]
   # Esto es para obligar que el usuario esté logueado para acceder a estas vistas
-
   def new
     @comics = Comic.all
     @character = Character.new
@@ -18,14 +17,13 @@ class CharactersController < ApplicationController
   def create
     @character = Character.new(permit_params)
 
-    image_url = Marvel::CharacterService.new(@character.name).call
+    image_url = Marvel::GetCharacterImage.new(@character.name).call
 
     @character.image_url = image_url if image_url.present?
 
     @character.user_id = current_user.id if permit_params[:user_id].blank?
 
     if @character.save
-      @character.save_comics
       redirect_to @character
     else
       @comics = Comic.all
