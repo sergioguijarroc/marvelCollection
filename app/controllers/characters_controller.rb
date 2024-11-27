@@ -20,7 +20,7 @@ class CharactersController < ApplicationController
     character_attributes[:user_id] = current_user.id if character_attributes[:user_id].blank?
 
     # Fetch Marvel data before creating character
-    marvel_data = MarvelApiService.new(character_attributes[:name]).fetch_character_data
+    marvel_data = MarvelService::CharacterService.new(character_attributes[:name]).call
     character_attributes.merge!(marvel_data) if marvel_data
 
     @character = Character.new(character_attributes)
