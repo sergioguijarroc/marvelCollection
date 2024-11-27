@@ -1,7 +1,7 @@
 class Character < ApplicationRecord
   has_rich_text :description
   belongs_to :user
-  has_many :appearances
+  has_many :appearances, dependent: :destroy
   has_many :comics, through: :appearances
   attr_accessor :comic_elements
 
