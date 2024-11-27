@@ -20,6 +20,8 @@ class ComicsController < ApplicationController
 
   # POST /comics or /comics.json
   def create
+    marvel_data = MarvelService::ComicService.new(comic_params[:title]).call
+    comic_params.merge!(marvel_data) if marvel_data
     @comic = Comic.new(comic_params)
 
     respond_to do |format|
@@ -65,6 +67,6 @@ class ComicsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def comic_params
-    params.require(:comic).permit(:title, :release_date, :description)
+    params.require(:comic).permit(:title, :release_date, :description, :image_url)
   end
 end

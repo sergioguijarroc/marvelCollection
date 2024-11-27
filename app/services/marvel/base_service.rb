@@ -1,7 +1,7 @@
 require 'digest/md5'
 require 'httparty'
 
-module MarvelService
+module Marvel
   class BaseService
     include HTTParty
 

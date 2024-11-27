@@ -1,5 +1,5 @@
-module MarvelService
-  class CharacterService < BaseService
+module Marvel
+  class CharacterService < BaseService # Cambiar nombre
     def initialize(character_name)
       super()
       @character_name = character_name
@@ -10,9 +10,8 @@ module MarvelService
       return nil unless response.success? && response['data']['results'].any?
 
       character_data = response['data']['results'].first
-      {
-        image_url: "#{character_data['thumbnail']['path']}.#{character_data['thumbnail']['extension']}"
-      }
+
+      "#{character_data['thumbnail']['path']}.#{character_data['thumbnail']['extension']}"
     end
   end
 end

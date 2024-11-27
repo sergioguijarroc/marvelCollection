@@ -16,14 +16,13 @@ class CharactersController < ApplicationController
 
   # Maneja la creación de un nuevo Character a partir de los datos del formulario
   def create
-    character_attributes = permit_params
-    character_attributes[:user_id] = current_user.id if character_attributes[:user_id].blank?
+    @character = Character.new(permit_params)
 
-    # Fetch Marvel data before creating character
-    marvel_data = MarvelService::CharacterService.new(character_attributes[:name]).call
-    character_attributes.merge!(marvel_data) if marvel_data
+    image_url = Marvel::CharacterService.new(@character.name).call
 
-    @character = Character.new(character_attributes)
+    @character.image_url = image_url if image_url.present?
+
+    @character.user_id = current_user.id if permit_params[:user_id].blank?
 
     if @character.save
       @character.save_comics
@@ -86,7 +85,7 @@ class CharactersController < ApplicationController
 
   # Permit params
   def permit_params
-    params.require(:character).permit(:name, :description, :user_id, :image_url, :marvel_description,
+    params.require(:character).permit(:name, :description, :user_id, :image_url,
                                       comic_elements: [])
   end
 end

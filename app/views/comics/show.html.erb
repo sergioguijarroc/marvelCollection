@@ -9,6 +9,14 @@
         <% end %>
       </div>
 
+      <% if @comic.image_url.present? %>
+        <div class="row mb-4">
+          <div class="col-12 text-center">
+            <img src="<%= @comic.image_url %>" alt="<%= @comic.title %>" class="img-fluid rounded w-25" />
+          </div>
+        </div>
+      <% end %>
+
       <div class="card mb-4">
         <div class="card-body bg-light">
           <h5 class="card-subtitle mb-2 text-muted">Release Date</h5>
