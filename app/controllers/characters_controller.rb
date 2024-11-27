@@ -3,6 +3,7 @@ class CharactersController < ApplicationController
   before_action :authenticate_user!, only: %i[new create edit update destroy from_user]
   before_action :find_character, except: %i[new create index from_user]
   before_action :load_characters, only: %i[index from_user]
+  # before_action :set_comics, only: %i[update]
   # Esto es para obligar que el usuario esté logueado para acceder a estas vistas
   def new
     @comics = Comic.all
@@ -45,7 +46,6 @@ class CharactersController < ApplicationController
   def update
     @character = Character.find(params[:id])
     if @character.update(permit_params) # si se actualiza correctamente con los datos del formulario
-      @character.save_comics
       redirect_to @character # Redirige a la vista show
     else
       @users = User.all
@@ -81,9 +81,13 @@ class CharactersController < ApplicationController
     @characters = CharacterFilter.new(@characters, params).call
   end
 
+  # def set_comics
+  #   params[:character][:comic_ids] ||= []
+  # end
+
   # Permit params
   def permit_params
     params.require(:character).permit(:name, :description, :user_id, :image_url,
-                                      comic_elements: [])
+                                      comic_ids: []).reverse_merge(comic_ids: [])
   end
 end

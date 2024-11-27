@@ -59,15 +59,20 @@
       <% end %>
 
       <% if @comics %>
-        <%= form.label :comic_elements, class: "form-label" do %>
-          <i class="bi bi-book"></i> Select a comic
+        <%= form.label :comics, class: "form-label" do %>
+          <i class="bi bi-book"></i> Select comics
         <% end %>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mb-4">
           <% @comics.each do |comic| %>
             <div class="col">
               <div class="form-check">
-                <%= form.check_box :comic_elements, { multiple: true, class: "form-check-input" }, comic.id, nil %>
-                <%= form.label :comic_elements, comic.title, value: comic.id, class: "form-check-label" %>
+                <%= form.check_box :comic_ids, 
+                    { multiple: true, class: "form-check-input" }, 
+                    comic.id, 
+                    nil %>
+                <%= form.label :comic_ids, comic.title, 
+                    value: comic.id, 
+                    class: "form-check-label" %>
               </div>
             </div>
           <% end %>
