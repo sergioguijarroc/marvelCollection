@@ -18,7 +18,7 @@ class CharactersController < ApplicationController
   def create
     @character = Character.new(permit_params)
 
-    image_url = Marvel::GetCharacterImage.new(@character.name).call
+    image_url = MarvelServices::GetCharacterImage.new(@character.name).call
 
     @character.image_url = image_url if image_url.present?
 
