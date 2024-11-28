@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :comics
   resources :characters do
     get 'user/user_id', to: 'characters#from_user', on: :collection, as: :characters_by_user
+    get 'export', to: 'characters#export', on: :collection, as: :export
   end
 
   # get 'characters/new', to: 'characters#new',

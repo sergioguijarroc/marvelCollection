@@ -1,10 +1,9 @@
 class CharactersController < ApplicationController
   # Inicializa un nuevo objeto Character y prepara el formulario
   before_action :authenticate_user!, only: %i[new create edit update destroy from_user]
-  before_action :find_character, except: %i[new create index from_user]
+  before_action :find_character, except: %i[new create index from_user export]
   before_action :load_characters, only: %i[index from_user]
-  # before_action :set_comics, only: %i[update]
-  # Esto es para obligar que el usuario esté logueado para acceder a estas vistas
+
   def new
     @comics = Comic.all
     @character = Character.new
@@ -69,6 +68,12 @@ class CharactersController < ApplicationController
     @user = User.find(params[:user_id])
     @characters = @user.characters.all
     @index = false
+  end
+
+  def export
+    GenerateCharactersCsv.new.call
+
+    redirect_to characters_path, notice: 'CSV exported'
   end
 
   # Before action
