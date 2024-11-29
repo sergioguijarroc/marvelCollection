@@ -9,7 +9,7 @@
           <%= link_to new_character_path, class: "btn btn-primary" do %>
             <i class="bi bi-plus-circle"></i> Create New Character
           <% end %>
-          <%= link_to 'Export all Characters', export_characters_path %>
+          <%# link_to 'Export all Characters', export_characters_path %>
         <% else %>
           <%= link_to new_character_path(user_id: current_user.id), class: "btn btn-primary" do %>
             <i class="bi bi-plus-circle"></i> Create New Character
@@ -21,18 +21,29 @@
       <div class="mb-4">
         <%= form_with(url: characters_path, method: :get, local: true) do |form| %>
           <div class="input-group mb-3">
-            <%= form.text_field :search_name, value: params[:search_name], class: "form-control", placeholder: "Search by name" %>
-            <button class="btn btn-outline-secondary" type="submit">Search</button>
+            <%= form.text_field :search_name, 
+                value: params[:search_name], 
+                class: "form-control", 
+                placeholder: "Search by name" %>
+            <%= form.submit "Search",
+                class: "btn btn-outline-secondary",
+                formaction: characters_path %>
+            <%= form.submit "Export CSV",
+                class: "btn btn-secondary",
+                formaction: export_characters_path %>
           </div>
           <% if @users %>
             <div class="row g-3 mb-4">
               <div class="col-md-6">
-                  <%= form.select :user_id, options_from_collection_for_select(@users, :id, :email), { prompt: "Select a user" }, { class: "form-control" } %>                
-              </div>
+                <%= form.select :user_id, 
+                    options_from_collection_for_select(@users, :id, :email, params[:user_id]), 
+                    { prompt: "Select a user" }, 
+                    { class: "form-control" } %>
               </div>
             </div>
           <% end %>
         <% end %>
+      </div>
 
       <!-- Stats Cards -->
       <div class="row g-4 mb-4">

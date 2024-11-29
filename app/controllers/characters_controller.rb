@@ -19,6 +19,9 @@ class CharactersController < ApplicationController
 
     image_url = MarvelServices::GetCharacterImage.new(@character.name).call
 
+    MarvelServices::GetCharacterSeries.new(@character.name).call
+    # UpdateCharacterSeriesJob.perform_async(@character)
+
     @character.image_url = image_url if image_url.present?
 
     @character.user_id = current_user.id if permit_params[:user_id].blank?
@@ -71,7 +74,9 @@ class CharactersController < ApplicationController
   end
 
   def export
-    GenerateCharactersCsv.new.call
+    characters = Character.all
+    filtered_characters = CharacterFilter.new(characters, params).call
+    GenerateCharactersCsv.new(filtered_characters).call
 
     redirect_to characters_path, notice: 'CSV exported'
   end
@@ -82,8 +87,8 @@ class CharactersController < ApplicationController
   end
 
   def load_characters
-    @characters = Character.all
-    @characters = CharacterFilter.new(@characters, params).call
+    characters = Character.all
+    @characters = CharacterFilter.new(characters, params).call
   end
 
   # def set_comics

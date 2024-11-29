@@ -1,6 +1,5 @@
 class MarvelServices::GetCharacterImage
   def initialize(character_name)
-    super()
     @character_name = character_name
   end
 
