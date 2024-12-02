@@ -15,11 +15,5 @@ Rails.application.routes.draw do
 
   mount Sidekiq::Web => '/sidekiq'
 
-  # get 'characters/new', to: 'characters#new',
-  # post 'characters', to: 'characters#create'
-  # get 'characters/:id', to: 'characters#show'
-  # get 'characters/:id/edit', to: 'characters#edit',
-  # patch 'characters/:id', to: 'characters#update'
-  # delete 'characters/:id', to: 'characters#destroy',
-  # get 'characters', to: 'characters#index'
+  match '*path', to: 'application#routing_error', via: :all
 end

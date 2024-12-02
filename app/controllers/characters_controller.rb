@@ -1,26 +1,27 @@
 class CharactersController < ApplicationController
-  # Inicializa un nuevo objeto Character y prepara el formulario
+  include Pundit::Authorization
+
   before_action :authenticate_user!, only: %i[new create edit update destroy from_user]
   before_action :find_character, except: %i[new create index from_user export]
   before_action :load_characters, only: %i[index from_user export]
+  before_action :authorize_character, except: %i[index new create from_user export]
 
   def new
     @comics = Comic.all
     @character = Character.new
+    authorize @character
     return if params[:user_id]
 
     @users = User.all
     nil
   end
 
-  # Maneja la creación de un nuevo Character a partir de los datos del formulario
   def create
     @character = Character.new(permit_params)
+    authorize @character
 
     image_url = MarvelServices::GetCharacterImage.new(@character.name).call
-
     @character.image_url = image_url if image_url.present?
-
     @character.user_id = current_user.id if permit_params[:user_id].blank?
 
     if @character.save
@@ -33,7 +34,6 @@ class CharactersController < ApplicationController
     end
   end
 
-  # Muestra un Character específico basado en su id
   def show
     @comics = @character.comics
   end
@@ -44,9 +44,8 @@ class CharactersController < ApplicationController
   end
 
   def update
-    @character = Character.find(params[:id])
-    if @character.update(permit_params) # si se actualiza correctamente con los datos del formulario
-      redirect_to @character # Redirige a la vista show
+    if @character.update(permit_params)
+      redirect_to @character
     else
       @users = User.all
       @comics = Comic.all
@@ -55,7 +54,6 @@ class CharactersController < ApplicationController
   end
 
   def destroy
-    @character = Character.find(params[:id])
     @character.destroy
     redirect_to characters_path
   end
@@ -73,10 +71,10 @@ class CharactersController < ApplicationController
 
   def export
     send_data(GenerateCharactersCsv.new(@characters).call, filename: 'test.csv')
-    # redirect_to characters_path, notice: 'CSV exported'
   end
 
-  # Before action
+  private
+
   def find_character
     @character = Character.find(params[:id])
   end
@@ -86,13 +84,12 @@ class CharactersController < ApplicationController
     @characters = CharacterFilter.new(characters, params).call
   end
 
-  # def set_comics
-  #   params[:character][:comic_ids] ||= []
-  # end
-
-  # Permit params
   def permit_params
     params.require(:character).permit(:name, :description, :user_id, :image_url,
                                       comic_ids: []).reverse_merge(comic_ids: [])
+  end
+
+  def authorize_character
+    authorize @character
   end
 end
