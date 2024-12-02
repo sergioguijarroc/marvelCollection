@@ -8,4 +8,7 @@ class Character < ApplicationRecord
   accepts_nested_attributes_for :appearances, allow_destroy: true
 
   validates :name, :description, :user_id, presence: true
+
+  # Serializar la columna series como un array de strings
+  serialize :series, Array
 end

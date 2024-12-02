@@ -62,3 +62,5 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'devise'
 
 gem "sidekiq", "~> 7.3"
+
+gem "pundit", "~> 2.4"

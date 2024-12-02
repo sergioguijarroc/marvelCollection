@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   devise_for :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
@@ -10,6 +12,8 @@ Rails.application.routes.draw do
     get 'user/user_id', to: 'characters#from_user', on: :collection, as: :characters_by_user
     get 'export', to: 'characters#export', on: :collection, as: :export
   end
+
+  mount Sidekiq::Web => '/sidekiq'
 
   # get 'characters/new', to: 'characters#new',
   # post 'characters', to: 'characters#create'

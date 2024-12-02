@@ -1,65 +1,123 @@
 <!-- app/views/characters/show.html.erb -->
 <div class="container-fluid py-4">
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="card-title mb-0"><%= @character.name %></h2>
-        <%= link_to characters_path, class: "btn btn-outline-secondary" do %>
-          <i class="bi bi-arrow-left"></i> Back
-        <% end %>
-      </div>
+  <% if notice %>
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+      <%= notice %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
 
-      <% if @character.image_url.present? %>
-        <div class="row mb-4">
-          <div class="col-12 text-center">
-            <img src="<%= @character.image_url %>" alt="<%= @character.name %>" class="img-fluid rounded w-25" />
+  <div class="row">
+    <!-- Columna Izquierda: Imagen y Acciones -->
+    <div class="col-md-4">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body text-center">
+          <% if @character.image_url.present? %>
+            <img src="<%= @character.image_url %>" 
+                 alt="<%= @character.name %>" 
+                 class="img-fluid rounded mb-3 w-75" />
+          <% else %>
+            <div class="placeholder-image">
+              <i class="bi bi-person-circle display-1"></i>
+            </div>
+          <% end %>
+          
+          <h2 class="card-title"><%= @character.name %></h2>
+          <div class="creator-info small text-muted mb-3">
+            <i class="bi bi-person"></i>
+            Created by <%= @character.user.email %>
+          </div>
+          
+          <div class="d-grid gap-2">
+            <%= link_to characters_path, class: "btn btn-outline-secondary" do %>
+              <i class="bi bi-arrow-left"></i> Back
+            <% end %>
+            <%= link_to edit_character_path(@character), class: "btn btn-warning" do %>
+              <i class="bi bi-pencil-fill"></i> Edit
+            <% end %>
+            <%= link_to @character, 
+                method: :delete, 
+                class: "btn btn-danger",
+                data: { confirm: 'Are you sure you want to delete this character?' } do %>
+              <i class="bi bi-trash-fill"></i> Delete
+            <% end %>
           </div>
         </div>
-      <% end %>
+      </div>
+    </div>
 
-      <div class="card mb-4">
-        <div class="card-body bg-light">
-          <h5 class="card-subtitle mb-2 text-muted">Description</h5>
-          <p class="card-text"><%= @character.description %></p>
+    <!-- Columna Derecha: Información -->
+    <div class="col-md-8">
+      <!-- Descripción -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+          <i class="bi bi-info-circle"></i> Description
+        </div>
+        <div class="card-body">
+          <%= @character.description %>
         </div>
       </div>
 
-      <div class="card mb-4">
-        <div class="card-body">
-          <h5 class="card-subtitle mb-2 text-muted">Creator Information</h5>
-          <p class="card-text">
-            <i class="bi bi-envelope"></i>
-            Created by: <strong><%= @character.user.email %></strong>
-          </p>
-        </div>
-      </div>
-
-      <div class="card mb-4">
-        <div class="card-body">
-          <h5 class="card-subtitle mb-2 text-muted">Comics</h5>
-            <ul class="list-group">
-              <% if @comics.any? %>
-                <% @comics.each do |comic| %>
-                  <li class="list-group-item"><%= link_to comic.title, comic %></li>
-                <% end %>
+      <div class="row">
+        <!-- Series -->
+        <div class="col-md-6">
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-success text-white">
+              <i class="bi bi-collection"></i> Series
+              <span class="badge bg-light text-dark float-end">
+                <%= @character.series&.count || 0 %>
+              </span>
+            </div>
+            <div class="card-body">
+              <% if @character.series&.any? %>
+                <div class="list-group list-group-flush">
+                  <% @character.series.each do |serie| %>
+                    <div class="list-group-item">
+                      <i class="bi bi-book me-2"></i>
+                      <%= serie %>
+                    </div>
+                  <% end %>
+                </div>
               <% else %>
-                <p><strong>No comics found</strong></p>
+                <div class="text-center py-3">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <p class="text-muted mt-2">Loading series...</p>
+                </div>
               <% end %>
-            </ul>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="d-flex justify-content-end">
-        <%= link_to edit_character_path(@character), class: "btn btn-warning me-2" do %>
-          <i class="bi bi-pencil-fill"></i> Edit
-        <% end %>
-        
-        <%= link_to @character, 
-            method: :delete, 
-            class: "btn btn-danger",
-            data: { confirm: 'Are you sure you want to delete this character?' } do %>
-          <i class="bi bi-trash-fill"></i> Delete
-        <% end %>
+        <!-- Comics -->
+        <div class="col-md-6">
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-info text-white">
+              <i class="bi bi-journal-richtext"></i> Comics
+              <span class="badge bg-light text-dark float-end">
+                <%= @comics&.count || 0 %>
+              </span>
+            </div>
+            <div class="card-body">
+              <% if @comics&.any? %>
+                <div class="list-group list-group-flush">
+                  <% @comics.each do |comic| %>
+                    <%= link_to comic, class: "list-group-item list-group-item-action" do %>
+                      <i class="bi bi-book-half me-2"></i>
+                      <%= comic.title %>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% else %>
+                <p class="text-muted text-center py-3">
+                  <i class="bi bi-emoji-neutral"></i>
+                  No comics found
+                </p>
+              <% end %>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
