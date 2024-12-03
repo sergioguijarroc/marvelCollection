@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ComicsController < ApplicationController
   before_action :set_comic, only: %i[show edit update destroy]
 
@@ -15,8 +17,7 @@ class ComicsController < ApplicationController
   end
 
   # GET /comics/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /comics or /comics.json
   def create

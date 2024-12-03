@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddUserIdToCharacter < ActiveRecord::Migration[6.1]
   def change
     # Verificar si la columna ya existe

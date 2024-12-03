@@ -1,4 +1,7 @@
-class UpdateCharacterSeriesJob # < ActiveJob::Base
+# frozen_string_literal: true
+
+# < ActiveJob::Base
+class UpdateCharacterSeriesJob
   include Sidekiq::Job
   sidekiq_options retry: 3
 

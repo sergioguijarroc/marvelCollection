@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CharactersController < ApplicationController
   include Pundit::Authorization
 

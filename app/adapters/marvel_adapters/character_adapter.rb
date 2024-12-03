@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MarvelAdapters
   class CharacterAdapter < BaseAdapter
     def initialize(character_name)

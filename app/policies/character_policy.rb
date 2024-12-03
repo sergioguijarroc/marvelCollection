@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CharacterPolicy < ApplicationPolicy
   def index?
     true if can_access?('read')

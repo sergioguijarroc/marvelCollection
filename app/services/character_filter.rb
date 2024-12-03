@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CharacterFilter
   def initialize(characters, params)
     @params = params
