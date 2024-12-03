@@ -12,15 +12,9 @@
     <div class="col-md-4">
       <div class="card shadow-sm mb-4">
         <div class="card-body text-center">
-          <% if @comic.image_url.present? %>
-            <img src="<%= @comic.image_url %>" 
-                 alt="<%= @comic.title %>" 
-                 class="img-fluid rounded mb-3 w-75" />
-          <% else %>
             <div class="placeholder-image">
               <i class="bi bi-book display-1"></i>
             </div>
-          <% end %>
           
           <h2 class="card-title"><%= @comic.title %></h2>
           <div class="release-date small text-muted mb-3">

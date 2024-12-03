@@ -8,6 +8,8 @@ module MarvelServices
 
     def call
       character_data = MarvelAdapters::CharacterAdapter.new(@character_name).request
+      return unless character_data.present?
+
       "#{character_data['thumbnail']['path']}.#{character_data['thumbnail']['extension']}"
     end
   end

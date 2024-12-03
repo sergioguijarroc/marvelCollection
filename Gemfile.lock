@@ -90,6 +90,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    docile (1.4.1)
     erubi (1.13.0)
     ffi (1.17.0-x86_64-linux-gnu)
     globalid (1.2.1)
@@ -229,6 +230,12 @@ GEM
       logger
       rack (>= 2.2.4)
       redis-client (>= 0.22.2)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.13.1)
+    simplecov_json_formatter (0.1.4)
     smarter_csv (1.13.0)
     spring (4.2.1)
     sprockets (4.2.1)
@@ -291,6 +298,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   selenium-webdriver (>= 4.0.0.rc1)
   sidekiq (~> 7.3)
+  simplecov
   smarter_csv (~> 1.1, >= 1.1.4)
   spring
   sqlite3 (~> 1.4)
