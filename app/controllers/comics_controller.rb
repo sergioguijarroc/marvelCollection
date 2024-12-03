@@ -20,8 +20,6 @@ class ComicsController < ApplicationController
 
   # POST /comics or /comics.json
   def create
-    marvel_data = MarvelService::ComicService.new(comic_params[:title]).call
-    comic_params.merge!(marvel_data) if marvel_data
     @comic = Comic.new(comic_params)
 
     respond_to do |format|

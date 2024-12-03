@@ -13,7 +13,7 @@
           <i class="bi bi-pencil-fill"></i> Edit
         <% end %>
       <%end%>
-      <% if current_user.permissions.include? 'delete' %>
+      <% if CharacterPolicy.new(current_user, character).destroy? %>
         <%= link_to character, 
             method: :delete, 
             class: "btn btn-sm btn-outline-danger",
