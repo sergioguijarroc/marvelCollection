@@ -28,7 +28,7 @@
             <%= form.submit "Search",
                 class: "btn btn-outline-secondary",
                 formaction: characters_path %>
-            <% if current_user.permissions.include? 'export'%>
+            <% if current_user && current_user.permissions.include?('export') %>
             <%= form.submit "Export CSV",
                 class: "btn btn-secondary",
                 formaction: export_characters_path %>
