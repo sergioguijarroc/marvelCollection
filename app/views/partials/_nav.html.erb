@@ -1,16 +1,18 @@
-  <nav class="navbar bg-black navbar-dark navbar-expand-lg">
-    <div class="container-fluid">
-      <%= link_to 'Home', root_path, class: 'navbar-brand' %>
-      <%= link_to 'All Characters', characters_path, class: 'btn btn-outline-light' %>
-      <%= link_to 'All comics', comics_path, class: 'btn btn-outline-light' %>
-      <%if user_signed_in?%>
-      <%= link_to 'My Characters', characters_by_user_path(current_user), class: 'btn btn-outline-light' %>
-      <%end%>
-      <% if user_signed_in?%>
-        <%= link_to 'Logout', destroy_user_session_path, method: :delete, class:"btn btn-outline-light"%>
-      <% else %>
-        <%= link_to 'SignUp', new_user_registration_path, class:"btn btn-outline-light" %>
-        <%= link_to 'Login', new_user_session_path, class:"btn btn-outline-light"%>
-      <%end%>
-    </div>
-  </nav>
+<nav class="navbar bg-black navbar-dark navbar-expand-lg">
+  <div class="container-fluid">
+    <%= link_to root_path, class: 'navbar-brand' do %>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Marvel_Logo.svg/1200px-Marvel_Logo.svg.png" alt="Home" style="height: 33px;">
+    <% end %>
+    <%= link_to 'All Characters', characters_path, class: 'btn btn-outline-light' %>
+    <%= link_to 'All comics', comics_path, class: 'btn btn-outline-light' %>
+    <% if user_signed_in? %>
+      <% if current_user && CharacterPolicy.new(current_user, nil).create? %>
+        <%= link_to 'My Characters', characters_by_user_path(current_user), class: 'btn btn-outline-light' %>
+      <% end %>
+      <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: "btn btn-outline-light" %>
+    <% else %>
+      <%= link_to 'SignUp', new_user_registration_path, class: "btn btn-outline-light" %>
+      <%= link_to 'Login', new_user_session_path, class: "btn btn-outline-light" %>
+    <% end %>
+  </div>
+</nav>

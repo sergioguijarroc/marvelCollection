@@ -1,5 +1,79 @@
-<%if user_signed_in?%>
-    <h1>Welcome back, <%= current_user.email%> </h1>
-<%else%>
-    <h1>Hello World</h1>
-<%end%>
+<!-- Hero Section -->
+<div class="hero-section position-relative">
+  <!-- Background Image with Gradient Overlay -->
+  <div class="position-absolute top-0 start-0 w-100 h-100" style="
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), 
+      url('https://wallpapercave.com/wp/sqXsp4j.jpg') no-repeat center center;
+      background-size: cover;
+      border-radius: 10px;">
+  </div>
+  
+  <!-- Hero Content -->
+  <div class="container min-vh-100 d-flex flex-column justify-content-center align-items-center position-relative">
+    <%if user_signed_in?%>
+      <h1 class="display-3 text-white fw-bold text-center mb-4">Welcome back, <%= current_user.email%></h1>
+      <p class="lead text-white text-center mb-5 fs-3">Ready to continue your journey?</p>
+      <%=link_to 'Get Started', characters_path, class: "btn btn-primary btn-lg px-5 py-3 fs-5"%>
+    <%else%>
+      <h1 class="display-3 text-white fw-bold text-center mb-4">Discover Amazing Features</h1>
+      <p class="lead text-white text-center mb-5 fs-3">Join thousands of satisfied users today</p>
+      <div class="d-flex gap-3">
+        <%= link_to 'Sign Up Now', new_user_registration_path, class:"btn btn-primary btn-lg px-5 py-3 fs-5"%>
+        <a href="#" class="btn btn-outline-light btn-lg px-5 py-3 fs-5">Learn More</a>
+      </div>
+    <%end%>
+  </div>
+</div>
+
+<!-- Features Section -->
+<div class="container py-6">
+  <h2 class="display-5 text-center mb-5">Marvel Collection Features</h2>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card border-0 h-100 shadow-lg hover-scale">
+        <div class="card-body p-5">
+          <div class="text-danger mb-4">
+            <i class="bi bi-shield-fill fs-1"></i>
+          </div>
+          <h3 class="h4 mb-3">Superheroes</h3>
+          <p class="text-muted mb-0">Explore detailed profiles of your favorite Marvel heroes and their amazing powers.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card border-0 h-100 shadow-lg hover-scale">
+        <div class="card-body p-5">
+          <div class="text-danger mb-4">
+            <i class="bi bi-book-fill fs-1"></i>
+          </div>
+          <h3 class="h4 mb-3">Comic Library</h3>
+          <p class="text-muted mb-0">Access thousands of Marvel comics and storylines from different universes.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card border-0 h-100 shadow-lg hover-scale">
+        <div class="card-body p-5">
+          <div class="text-danger mb-4">
+            <i class="bi bi-film fs-1"></i>
+          </div>
+          <h3 class="h4 mb-3">MCU Timeline</h3>
+          <p class="text-muted mb-0">Follow the complete Marvel Cinematic Universe chronological order.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+.hover-scale:hover {
+  transform: translateY(-5px);
+}
+.py-6 {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+</style>

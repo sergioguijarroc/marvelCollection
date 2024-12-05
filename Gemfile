@@ -57,6 +57,7 @@ group :test do
   gem 'rubocop'
   gem 'simplecov', require: false
   gem 'webdrivers'
+  gem 'webmock'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

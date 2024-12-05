@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'simplecov'
-SimpleCov.start 'rails'
+SimpleCov.start
 
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
@@ -15,6 +15,31 @@ module ActiveSupport
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
 
-    # Add more helper methods to be used by all tests here...
+    def stub_api_marvel
+      mock_response = {
+        data: {
+          results: [
+            {
+              id: 1,
+              name: 'Iron Man',
+              description: 'He loves you 3000',
+              thumbnail: {
+                path: 'http://example.com/image',
+                extension: 'jpg'
+              }
+            }
+          ]
+        }
+      }
+
+      stub_request(:get, 'https://gateway.marvel.com/v1/public/characters')
+        .to_return(
+          status: 200,
+          body: mock_response.to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        )
+
+      mock_response
+    end
   end
 end

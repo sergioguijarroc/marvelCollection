@@ -32,12 +32,12 @@
             <%= link_to characters_path, class: "btn btn-outline-secondary" do %>
               <i class="bi bi-arrow-left"></i> Back
             <% end %>
-            <%if current_user.permissions.include? 'update'%>
+            <%if current_user && current_user.permissions.include?('update')%>
               <%= link_to edit_character_path(@character), class: "btn btn-warning" do %>
                 <i class="bi bi-pencil-fill"></i> Edit
               <% end %>
             <%end%>
-            <% if current_user.permissions.include? 'delete' %>
+            <% if current_user && current_user.permissions.include?('delete') %>
               <%= link_to @character, 
                   method: :delete, 
                   class: "btn btn-danger",

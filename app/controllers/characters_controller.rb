@@ -6,7 +6,7 @@ class CharactersController < ApplicationController
   before_action :authenticate_user!, only: %i[new create edit update destroy from_user]
   before_action :find_character, except: %i[new create index from_user export]
   before_action :load_characters, only: %i[index from_user export]
-  before_action :authorize_character, except: %i[index new create from_user export]
+  before_action :authorize_character, except: %i[index new create from_user export show]
 
   def new
     @comics = Comic.all
@@ -77,6 +77,13 @@ class CharactersController < ApplicationController
 
   private
 
+  def permit_params
+    params.require(:character).permit(:name, :description, :user_id, :image_url,
+                                      comic_ids: []).reverse_merge(comic_ids: [])
+  end
+
+  # Callbacks
+
   def find_character
     @character = Character.find(params[:id])
   end
@@ -84,11 +91,6 @@ class CharactersController < ApplicationController
   def load_characters
     characters = Character.all
     @characters = CharacterFilter.new(characters, params).call
-  end
-
-  def permit_params
-    params.require(:character).permit(:name, :description, :user_id, :image_url,
-                                      comic_ids: []).reverse_merge(comic_ids: [])
   end
 
   def authorize_character

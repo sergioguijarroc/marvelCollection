@@ -4,15 +4,15 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: 
+admin: 
   email: 'pepe@gmail.com'
   encrypted_password: '$2a$11$1Q6Z'
   reset_password_token: 'MyString'
-  permissions: ['delete', 'update','create','read','export']
+  permissions: ['delete', 'update','read','export','create']
 # column: value
 #
-two: 
+regular: 
   email: 'manolo@gmail.com'
-  permissions: ['delete', 'update','create','read','export']
+  permissions: ['read']
   
 # column: value
